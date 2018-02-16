@@ -1,2 +1,0 @@
-w1 y w2 son los pesos de cada capa de la red
-E y Ev son los errores (sin dividir por el tamañano del dataset) a los que convergio
