@@ -11,11 +11,11 @@ function [w1,w2,Error]=BackPropagation(In_Set,Target_Set,Learning_Rate,w1,w2,Epo
 
     Error_Vector=[]; %Vector de error de entrenamiento por epoca.
     
-for t=1:Epocas %Itero en la cantidad de epocas.
+        for t=1:Epocas %Itero en la cantidad de epocas.
         
     Error_Total=0; %Error total para una epoca
  
-for h=randperm(length(In_Set(1,:)))
+        for h=randperm(length(In_Set(1,:))); 
                 %Itero sobre el set de entren.
             
             [w1,w2,Error]=Correction(In_Set(:,h),Target_Set(h),Learning_Rate,w1,w2);
@@ -23,16 +23,16 @@ for h=randperm(length(In_Set(1,:)))
             
             Error_Total = Error_Total + Error;
                             
-end
+        end
         
-        Error_Vector = [Error_Vector,Error_Total]; 
-                %Acumulo errores
+        Error_Vector = [Error_Vector,Error_Total];     
         
-end
+    end
     
     Error = Error_Total; %Error del ultimo entrenamiento.
-    plot(1:size(Error_Vector,2),Error_Vector,'d') %Evolucion del error.
+    plot(1:size(Error_Vector,2),Error_Vector,'o') %Grafico la evoluci?n del error.
     title('Evolucion del error')
-    xlabel('iteracion'); ylabel('Error');grid on
+    xlabel('iteracion'); ylabel('Error')
    
+
 end
