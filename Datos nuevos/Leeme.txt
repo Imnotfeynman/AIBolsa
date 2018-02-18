@@ -1,0 +1,16 @@
+La función comaapunto transforma todas las comas 
+en el archivo a puntos. Para pasar de la notación 
+argentina a la yanki.
+
+El script comaapunto_script aplica la función anterior
+a los archivos en Datos y lo almacena en DatosPunto.
+
+El script DatospuntoaEstructura convierte los .csv en 
+DatosPunto y los pasa a estructuras de Matlab.
+
+Se guarda "especies" que es un array de estructuras 
+(una por cada especie) y "nombres" que es un array 
+que tiene el nombre de las especies. El índice del 
+nombre de la especie en "nombres" se corresponde con
+el índice de la especie en "especies". 
+Es un trabalenguas pero es así.

@@ -1,0 +1,76 @@
+clear all
+
+cd('DatosPunto')
+archivos1 = dir('*.csv');
+archivos.name = {archivos1.name};
+archivos.folder = {archivos1.folder};
+clear archivos1
+cd ..
+
+mkdir('Estructuras')
+destino=cd;
+destino = [destino, '\Estructuras\'];
+ii=1;
+data  = readtable([archivos.folder{ii},'\', archivos.name{ii}]) ;
+
+data3 = table2array(data(:,1),'ToScalar',true) ;
+largo= cellfun(@length,data3);
+n= length(data3);
+nombres=nan(n,max(largo));
+
+for ii=1:n
+   nombres(ii,1:(largo(ii)))= uint16(data3{ii}); 
+end
+
+diferencias = diff(nombres) ;
+diferencias(isnan(diferencias)) = 0 ;
+diferencias = sum(diferencias.^2,2) ;
+diferencias(diferencias>0) = 1 ;
+diferencias=[1; diferencias];
+posiciones= [find(diferencias); n+1];
+
+for ii=1:sum(diferencias)
+    data4 = table2struct(data(posiciones(ii):(posiciones(ii+1)-1),:),'ToScalar',true) ;
+       
+     aux = data4.Especie; data4 = rmfield(data4,'Especie'); 
+     data4.nombre = aux; clear aux
+     
+     aux = data4.Fecha; data4 = rmfield(data4,'Fecha'); 
+     data4.fecha = aux; clear aux
+     
+     aux = data4.Vencimiento; data4 = rmfield(data4,'Vencimiento'); 
+     data4.vencimiento = aux; clear aux
+     
+     aux = data4.TipoDeSerie; data4 = rmfield(data4,'TipoDeSerie');
+     data4.tipodeserie = aux; clear aux
+     
+     aux = data4.CierreDelD_a; data4 = rmfield(data4,'CierreDelD_a');
+     data4.cierre = aux; clear aux
+     
+     aux = data4.Variaci_n_; data4 = rmfield(data4,'Variaci_n_');
+     data4.variacion = aux; clear aux
+     
+     aux = data4.Apertura; data4 = rmfield(data4,'Apertura');
+     data4.apertura = aux; clear aux
+     
+     aux = data4.M_ximo; data4 = rmfield(data4,'M_ximo');
+     data4.maximo = aux; clear aux
+     
+     aux = data4.M_nimo; data4 = rmfield(data4,'M_nimo');
+     data4.minimo = aux; clear aux
+     
+     aux = data4.VolumenNominal; data4 = rmfield(data4,'VolumenNominal');
+     data4.volumennominal = aux; clear aux
+          
+     aux = data4.MontoNegociado; data4 = rmfield(data4,'MontoNegociado');
+     data4.montonegociado = aux; clear aux
+     
+     aux = data4.N_Oper; data4 = rmfield(data4,'N_Oper');
+     data4.noper = aux; clear aux
+     
+especies(ii)=data4;
+clear data4
+end
+nombres=char(nombres(posiciones(1:end-1),:));
+save([destino, 'especies','.mat'], 'especies','nombres')
+clear all
