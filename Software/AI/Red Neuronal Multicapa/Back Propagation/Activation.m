@@ -11,8 +11,10 @@ function [Out,Hidden_Bias,In_Bias]=Activation(In,w1,w2) %original
     In_Bias = [In;1]; %Entrada y bias.             
     %Hidden_Bias = [(sigmoidFunction(w1'*In_Bias'));1]; %Salida capa oculta
     %y bias. Original
-    Hidden_Bias = [(sigmoidFunction(w1'*In_Bias));1]; %Salida capa oculta y bias.   
-
+    
+    %Hidden_Bias = [(sigmoidFunction(w1'*In_Bias));1]; %Salida capa oculta y bias. original
+    Hidden_Bias = [(tanh_function(w1'*In_Bias));1]; %Salida capa oculta y bias. con tgh
+    
     Out = w2'*Hidden_Bias; %Salida de la red.
     
 end
